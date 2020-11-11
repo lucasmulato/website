@@ -20,6 +20,9 @@ ul {
 p {
     color: #fffb96;
 }
+li {
+    color: #fffb96;
+}
 .navbar {
     position: fixed;
     top: 0;
