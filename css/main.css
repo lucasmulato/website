@@ -2,6 +2,25 @@ body {
   background-image: url("../img/backs/00.gif");
   background-size: cover;
 }
+
+.icon-linkedin {
+    background-image: url("../img/icons/linkedin_icon.jpg");
+}
+
+.icon-twitter {
+    background-image: url("../img/icons/twitter_icon.png");
+}
+
+.icon-insta {
+    background-image: url("../img/icons/insta_icon.png");
+}
+
+.icon-twitch {
+    background-image: url("../img/icons/twitch_icon.jpeg");
+    width: 27px;
+    height: 27px;
+}
+
 h1{
   color: #fffb96;
 }
