@@ -5,14 +5,20 @@ body {
 
 .icon-linkedin {
     background-image: url("../img/icons/linkedin_icon.jpg");
+    width: 30px;
+    height: 30px;
 }
 
 .icon-twitter {
     background-image: url("../img/icons/twitter_icon.png");
+    width: 27px;
+    height: 27px;
 }
 
 .icon-insta {
     background-image: url("../img/icons/insta_icon.png");
+    width: 35px;
+    height: 35px;
 }
 
 .icon-twitch {
