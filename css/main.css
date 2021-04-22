@@ -6,24 +6,27 @@ body {
 h1{
   color: #fffb96;
 }
+
 h2 {
   color: #00ff99;
 }
+
 h3 {
   color: #ff71ce;
 }
+
 h6 {
   color: #fffb96;
 }
+
 ul {
   color: #fffb96;
 }
+
 p {
   color: #fffb96;
 }
-li {
-  color: #fffb96;
-}
+
 .navbar {
   position: fixed;
   top: 0;
