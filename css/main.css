@@ -13,6 +13,7 @@ h2 {
 
 h3 {
   color: #ff71ce;
+  border: 20px;
 }
 
 h6 {
@@ -31,4 +32,11 @@ p {
   position: fixed;
   top: 0;
   width: 100%;
+}
+
+.text-center {
+  margin: auto;
+  width: 50%;
+  border: 75px solid green;
+  padding: 75px;
 }
