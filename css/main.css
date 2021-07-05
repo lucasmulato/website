@@ -37,6 +37,6 @@ p {
 .text-center {
   margin: auto;
   width: 50%;
-  border: 75px solid green;
+  border: 75px;
   padding: 75px;
 }
