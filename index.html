@@ -25,6 +25,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<link rel="stylesheet" type="text/css" href="styles00.css">
 
 </head>
 <body>
@@ -677,7 +678,29 @@
 				
 				<span class="close"><i class="fa fa-times"></i></span>			</section>
 			<!-- End Contact -->
-			<img class="background-image" src="./img/banner/6.jpg" height="auto" width="100%">
+			<style>
+				.background-image {
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* For mobile devices */
+@media (max-width: 767px) {
+  .background-image {
+    background-image: url('./img/mobile-bg.jpg');
+  }
+}
+
+/* For desktop devices */
+@media (min-width: 768px) {
+  .background-image {
+    background-image: url('./img/desktop-bg.jpeg');
+  }
+}
+			</style>
+			<img class="background-image" height="100%" width="100%">
 			
 			<!-- Portfolio Details -->
 			<div class="bl-panel-items" id="bl-panel-work-items">
