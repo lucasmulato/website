@@ -159,7 +159,6 @@
 				<div class="box">
 					<h2><i class="fa fa-graduation-cap"></i>Educação</h2>
 				</div>
-				
 				<div class="content">
 					<div class="section-padding">
 						<div class="container">
@@ -894,7 +893,6 @@
 										</div><!--end post thumb-->
 										<div class="meta">
 											<span class="author">By: <a href="#">Lucas Mulato</a></span>
-											
 											<span class="date">Postado: 27 Outubro 2023</span>
 										</div><!--end meta-->
 										<hr>
@@ -929,11 +927,9 @@
 											title: <span class="hljs-type">String</span>!
 											content: <span class="hljs-type">String</span>!
 											}
-
 											<span class="hljs-keyword">type</span> <span class="hljs-type">Query</span> {
 											posts: [<span class="hljs-type">Post</span>!]!
 											}
-
 											<span class="hljs-keyword">type</span> <span class="hljs-type">Mutation</span> {
 											addPost(title: <span class="hljs-type">String</span>!, content: <span class="hljs-type">String</span>!): <span class="hljs-type">Post</span>!
 											}
@@ -943,7 +939,6 @@
 											<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
 											<span class="hljs-keyword">const</span> { graphqlHTTP } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-graphql'</span>);
 											<span class="hljs-keyword">const</span> { buildSchema } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'graphql'</span>);
-
 											<span class="hljs-comment">// Criar o schema GraphQL</span>
 											<span class="hljs-keyword">const</span> schema = buildSchema(<span class="hljs-string">`
 											type Post {
@@ -951,22 +946,17 @@
 												title: String!
 												content: String!
 											}
-
 											type Query {
 												posts: [Post!]!
 											}
-
 											type Mutation {
 												addPost(title: String!, content: String!): Post!
 											}
 											`</span>);
-
 											<span class="hljs-comment">// Criar um array para armazenar os posts</span>
 											<span class="hljs-keyword">const</span> posts = [];
-
 											<span class="hljs-comment">// Criar um contador para gerar os ids dos posts</span>
 											<span class="hljs-keyword">let</span> idCount = <span class="hljs-number">1</span>;
-
 											<span class="hljs-comment">// Criar a raiz do servidor GraphQL</span>
 											<span class="hljs-keyword">const</span> root = {
 											<span class="hljs-comment">// Consulta que retorna a lista de posts</span>
@@ -980,10 +970,8 @@
 												<span class="hljs-keyword">return</span> post;
 											},
 											};
-
 											<span class="hljs-comment">// Criar o app Express</span>
 											<span class="hljs-keyword">const</span> app = express();
-
 											<span class="hljs-comment">// Usar o middleware graphqlHTTP para criar o endpoint GraphQL</span>
 											app.use(
 											<span class="hljs-string">'/graphql'</span>,
@@ -993,7 +981,6 @@
 												<span class="hljs-attr">graphiql</span>: <span class="hljs-literal">true</span>,
 											})
 											);
-
 											<span class="hljs-comment">// Iniciar o servidor na porta 4000</span>
 											app.listen(<span class="hljs-number">4000</span>, () =&gt; {
 											<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Servidor GraphQL rodando na porta 4000'</span>);
@@ -1002,20 +989,17 @@
 											<h3 id="cliente-apollo">Cliente Apollo</h3>
 											<p>O cliente Apollo é responsável por se conectar com o servidor GraphQL e fazer as consultas e mutações. Neste exemplo, vamos usar a biblioteca <code>@apollo/client</code> para criar o cliente Apollo e configurá-lo para usar o endpoint <code>/graphql</code> do servidor.</p>
 											<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { ApolloClient, InMemoryCache } <span class="hljs-keyword">from</span> <span class="hljs-string">'@apollo/client'</span>;
-
 											<span class="hljs-comment">// Criar o cliente Apollo</span>
 											<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> ApolloClient({
 											<span class="hljs-attr">uri</span>: <span class="hljs-string">'http://localhost:4000/graphql'</span>,
 											<span class="hljs-attr">cache</span>: <span class="hljs-keyword">new</span> InMemoryCache(),
 											});
-
 											<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> client;
 											</code></pre>
 											<h3 id="componente-postlist">Componente PostList</h3>
 											<p>O componente PostList é responsável por mostrar a lista de posts do blog. Neste exemplo, vamos usar o hook <code>useQuery</code> para fazer a consulta <code>posts</code> e obter os dados dos posts. Vamos também usar o componente <code>PostItem</code> para renderizar cada post individualmente.</p>
 											<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { useQuery, gql } <span class="hljs-keyword">from</span> <span class="hljs-string">'@apollo/client'</span>;
 											<span class="hljs-keyword">import</span> PostItem <span class="hljs-keyword">from</span> <span class="hljs-string">'./PostItem'</span>;
-
 											<span class="hljs-comment">// Definir a consulta GraphQL para obter os posts</span>
 											<span class="hljs-keyword">const</span> POSTS_QUERY = gql<span class="hljs-string">`
 											query PostsQuery {
@@ -1026,18 +1010,14 @@
 												}
 											}
 											`</span>;
-
 											<span class="hljs-comment">// Criar o componente PostList</span>
 											<span class="hljs-keyword">const</span> PostList = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
 											<span class="hljs-comment">// Usar o hook useQuery para fazer a consulta e obter os dados, o carregamento e o erro</span>
 											<span class="hljs-keyword">const</span> { data, loading, error } = useQuery(POSTS_QUERY);
-
 											<span class="hljs-comment">// Se estiver carregando, mostrar uma mensagem de carregamento</span>
 											<span class="hljs-keyword">if</span> (loading) <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Carregando...<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span>;
-
 											<span class="hljs-comment">// Se houver um erro, mostrar uma mensagem de erro</span>
 											<span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Erro: {error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span>;
-
 											<span class="hljs-comment">// Se houver dados, mostrar a lista de posts usando o componente PostItem</span>
 											<span class="hljs-keyword">if</span> (data) {
 												<span class="hljs-keyword">return</span> (
@@ -1052,18 +1032,15 @@
 												);
 											}
 											};
-
 											export default PostList;</span>
 											</code></pre>
 											<h3 id="componente-postitem">Componente PostItem</h3>
 											<p>O componente PostItem é responsável por mostrar os detalhes de um post. Neste exemplo, vamos usar o componente <code>Link</code> do Next.js para criar um link para a página do post, usando o id do post como parâmetro da rota dinâmica.</p>
 											<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> Link <span class="hljs-keyword">from</span> <span class="hljs-string">'next/link'</span>;
-
 											<span class="hljs-comment">// Criar o componente PostItem</span>
 											<span class="hljs-keyword">const</span> PostItem = <span class="hljs-function">(<span class="hljs-params">{ post }</span>) =&gt;</span> {
 											<span class="hljs-comment">// Extrair os dados do post</span>
 											<span class="hljs-keyword">const</span> { id, title, content } = post;
-
 											<span class="hljs-comment">// Retornar o elemento JSX que mostra o título e um trecho do conteúdo do post, com um link para a página do post</span>
 											<span class="hljs-keyword">return</span> (
 												<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
@@ -1075,14 +1052,12 @@
 												<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span>
 											);
 											};
-
 											<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> PostItem;
 											</code></pre>
 											<h3 id="componente-postform">Componente PostForm</h3>
 											<p>O componente PostForm é responsável por permitir que o usuário adicione um novo post ao blog. Neste exemplo, vamos usar o hook <code>useMutation</code> para fazer a mutação <code>addPost</code> e enviar os dados do novo post. Vamos também usar os hooks <code>useState</code> e <code>useRef</code> para gerenciar os dados do formulário.</p>
 											<pre><code class="lang-javascript">import { useMutation, gql } <span class="hljs-keyword">from</span> <span class="hljs-string">'@apollo/client'</span>;
 												import { useState, useRef } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-												
 												<span class="hljs-comment">// Definir a mutação GraphQL para adicionar um novo post</span>
 												<span class="hljs-keyword">const</span> ADD_POST_MUTATION = gql`
 												<span class="hljs-function">mutation <span class="hljs-title">AddPostMutation</span>(<span class="hljs-params">$title: String!, $content: String!</span>) </span>{
@@ -1093,47 +1068,37 @@
 													}
 												}
 												`;
-												
 												<span class="hljs-comment">// Criar o componente PostForm</span>
 												<span class="hljs-keyword">const</span> PostForm = () =&gt; {
 												<span class="hljs-comment">// Usar o hook useMutation para fazer a mutação e obter a função de execução e o resultado</span>
 												<span class="hljs-keyword">const</span> [addPost, { data, loading, error }] = useMutation(ADD_POST_MUTATION);
-												
 												<span class="hljs-comment">// Usar o hook useState para gerenciar o estado do título e do conteúdo do novo post</span>
 												<span class="hljs-keyword">const</span> [title, setTitle] = useState(<span class="hljs-string">''</span>);
 												<span class="hljs-keyword">const</span> [content, setContent] = useState(<span class="hljs-string">''</span>);
-												
 												<span class="hljs-comment">// Usar o hook useRef para obter as referências dos elementos do formulário</span>
 												<span class="hljs-keyword">const</span> titleInputRef = useRef();
 												<span class="hljs-keyword">const</span> contentInputRef = useRef();
-												
 												<span class="hljs-comment">// Criar uma função para lidar com a submissão do formulário</span>
 												<span class="hljs-keyword">const</span> handleSubmit = (e) =&gt; {
 													<span class="hljs-comment">// Prevenir o comportamento padrão do formulário</span>
 													e.preventDefault();
-												
 													<span class="hljs-comment">// Obter os valores dos elementos do formulário usando as referências</span>
 													<span class="hljs-keyword">const</span> title = titleInputRef.current.<span class="hljs-keyword">value</span>;
 													<span class="hljs-keyword">const</span> content = contentInputRef.current.<span class="hljs-keyword">value</span>;
-												
 													<span class="hljs-comment">// Validar os valores dos elementos do formulário</span>
 													<span class="hljs-keyword">if</span> (!title || !content) {
 													alert(<span class="hljs-string">'Por favor, preencha todos os campos'</span>);
 													<span class="hljs-keyword">return</span>;
 													}
-												
 													<span class="hljs-comment">// Executar a mutação passando os valores como variáveis</span>
 													addPost({ variables: { title, content } });
-												
 													<span class="hljs-comment">// Limpar os valores dos elementos do formulário</span>
 													titleInputRef.current.<span class="hljs-keyword">value</span> = <span class="hljs-string">''</span>;
 													contentInputRef.current.<span class="hljs-keyword">value</span> = <span class="hljs-string">''</span>;
-												
 													<span class="hljs-comment">// Atualizar o estado do título e do conteúdo do novo post</span>
 													setTitle(<span class="hljs-string">''</span>);
 													setContent(<span class="hljs-string">''</span>);
 												};
-												
 												<span class="hljs-comment">// Retornar o elemento JSX que mostra o formulário para adicionar um novo post, com os campos de título e conteúdo e um botão de enviar</span>
 												<span class="hljs-keyword">return</span> (
 													&lt;div&gt;
@@ -1162,19 +1127,15 @@
 														&lt;/div&gt;
 														&lt;button type=<span class="hljs-string">"submit"</span>&gt;Enviar&lt;/button&gt;
 													&lt;/form&gt;
-												
 													{<span class="hljs-comment">/* Se estiver carregando, mostrar uma mensagem de carregamento */</span>}
 													{loading &amp;&amp; &lt;p&gt;Carregando...&lt;/p&gt;}
-												
 													{<span class="hljs-comment">/* Se houver um erro, mostrar uma mensagem de erro */</span>}
 													{error &amp;&amp; &lt;p&gt;Erro: {error.message}&lt;/p&gt;}
-												
 													{<span class="hljs-comment">/* Se houver dados, mostrar uma mensagem de sucesso */</span>}
 													{data &amp;&amp; &lt;p&gt;Post adicionado com sucesso!&lt;/p&gt;}
 													&lt;/div&gt;
 												);
 												};
-												
 												export <span class="hljs-keyword">default</span> PostForm;
 												</code></pre>
 												<p>Esse é o fim da explicação. Espero que tenha sido útil. Se você quiser saber mais sobre React, GraphQL e Next.js, você pode consultar os links abaixo:</p>
