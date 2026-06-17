@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Segmentation Fault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0000;
+      --bg2:       #110505;
+      --border:    #2a0a0a;
+      --red:       #ff2222;
+      --redhi:     #ff5555;
+      --reddim:    #cc1111;
+      --reddark:   #3a0000;
+      --orange:    #ff6b35;
+      --white:     #f0e0e0;
+      --muted:     #7a4444;
+      --green:     #22ff44;   /* kept for the ONE "success" gag */
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'JetBrains Mono', monospace;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── CRT scanlines ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.18) 2px,
+        rgba(0,0,0,0.18) 4px
+      );
+    }
+
+    /* ── CRT flicker ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 998;
+      animation: flicker 8s step-end infinite;
+      background: rgba(255,0,0,0.015);
+    }
+    @keyframes flicker {
+      0%,95%,100% { opacity: 0; }
+      96%          { opacity: 1; }
+      97%          { opacity: 0; }
+      98%          { opacity: 1; }
+      99%          { opacity: 0; }
+    }
+
+    /* ── Grid background ── */
+    .grid-bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,34,34,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,34,34,0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ── Glow blob ── */
+    .blob {
+      position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+      filter: blur(100px); opacity: 0.12;
+      animation: breathe 6s ease-in-out infinite alternate;
+    }
+    @keyframes breathe { from { opacity:.08; } to { opacity:.18; } }
+
+    /* ── Main layout ── */
+    .terminal-wrap {
+      position: relative; z-index: 10;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .terminal {
+      width: 100%; max-width: 760px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow:
+        0 0 0 1px #1a0000,
+        0 0 40px rgba(255,34,34,0.12),
+        0 0 80px rgba(255,34,34,0.06);
+      overflow: hidden;
+    }
+
+    /* ── Title bar ── */
+    .titlebar {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--border);
+      padding: 10px 16px;
+      border-bottom: 1px solid #1a0000;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: var(--red); box-shadow: 0 0 6px var(--red); }
+    .dot-y { background: #ff6b35; box-shadow: 0 0 6px #ff6b35; }
+    .dot-g { background: #444; }   /* green disabled — nothing works here */
+    .titlebar-label {
+      margin-left: auto; margin-right: auto;
+      font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em;
+    }
+
+    /* ── Terminal body ── */
+    .body {
+      padding: 1.5rem 1.75rem 2rem;
+    }
+
+    /* ── Lines ── */
+    .line { display: flex; align-items: flex-start; gap: 0; margin-bottom: 0.25rem; font-size: 0.82rem; line-height: 1.6; }
+    .prompt-root { color: var(--red); font-weight: 700; white-space: nowrap; }
+    .prompt-path { color: var(--muted); white-space: nowrap; }
+    .cmd        { color: var(--white); }
+    .out        { color: var(--muted); padding-left: 0; }
+    .out-red    { color: var(--redhi); }
+    .out-bright { color: var(--white); }
+    .out-orange { color: var(--orange); }
+    .out-green  { color: var(--green); }
+    .out-dim    { color: #4a2222; }
+    .spacer     { height: 0.6rem; }
+
+    /* ── Big 404 ── */
+    .big404 {
+      display: block;
+      font-size: clamp(4rem, 18vw, 8.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--red);
+      text-shadow:
+        0 0 20px rgba(255,34,34,0.6),
+        0 0 60px rgba(255,34,34,0.2);
+      letter-spacing: -0.04em;
+      margin: 0.5rem 0 0.25rem;
+      animation: glitch 5s step-end infinite;
+    }
+    @keyframes glitch {
+      0%,90%,100% { text-shadow: 0 0 20px rgba(255,34,34,0.6), 0 0 60px rgba(255,34,34,0.2); transform: none; }
+      92%          { transform: translate(-3px, 0); text-shadow: 3px 0 0 rgba(255,100,100,0.8), -3px 0 0 rgba(200,0,0,0.8); }
+      94%          { transform: translate(3px, 0);  text-shadow: -3px 0 0 rgba(255,100,100,0.8), 3px 0 0 rgba(200,0,0,0.8); }
+      96%          { transform: none; }
+    }
+
+    /* ── Kernel panic block ── */
+    .panic-block {
+      background: var(--red);
+      color: #000;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin: 0.8rem 0;
+      animation: panic-blink 1.2s step-end infinite;
+    }
+    @keyframes panic-blink { 0%,100%{opacity:1} 50%{opacity:0.85} }
+
+    /* ── Progress / fake loading bar ── */
+    .bar-wrap {
+      background: #1a0505; border: 1px solid var(--border);
+      height: 8px; border-radius: 2px; overflow: hidden; margin: 2px 0 4px;
+      width: 220px; display: inline-block; vertical-align: middle;
+    }
+    .bar-fill {
+      height: 100%; background: var(--red);
+      width: 0%;
+      box-shadow: 0 0 8px var(--red);
+      animation: load-bar 3.5s ease-out 0.8s forwards;
+    }
+    @keyframes load-bar {
+      0%  { width: 0%; }
+      40% { width: 42%; }
+      65% { width: 67%; }
+      80% { width: 67%; }  /* stalls — very realistic */
+      95% { width: 99%; }
+      100%{ width: 99%; }  /* never reaches 100 — of course */
+    }
+
+    /* ── Cursor blink ── */
+    .cursor {
+      display: inline-block; width: 9px; height: 1.05em;
+      background: var(--red); vertical-align: text-bottom;
+      animation: cblink 1s step-end infinite;
+    }
+    @keyframes cblink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── Divider ── */
+    hr.term { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.4rem; }
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; font-weight: 500;
+      padding: 0.55rem 1.2rem;
+      border-radius: 5px; cursor: pointer; text-decoration: none;
+      border: 1px solid; transition: box-shadow 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--reddark); color: var(--redhi);
+      border-color: var(--reddim);
+    }
+    .btn-primary:hover { box-shadow: 0 0 14px rgba(255,34,34,0.4); }
+    .btn-ghost {
+      background: transparent; color: var(--muted);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover { color: var(--white); border-color: var(--muted); }
+
+    /* ── Typewriter lines (JS-driven) ── */
+    #live-output { min-height: 1.4rem; }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .big404, body::after, .bar-fill { animation: none; }
+      .bar-fill { width: 99%; }
+      .cursor { animation: none; opacity: 1; }
+    }
+
+    /* ── Mobile tweak ── */
+    @media (max-width: 480px) {
+      .body { padding: 1rem 1.1rem 1.5rem; }
+      .line { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-bg"></div>
+  <div class="blob" style="width:500px;height:500px;background:#ff0000;top:-10%;left:-10%;"></div>
+  <div class="blob" style="width:400px;height:400px;background:#cc0000;bottom:-5%;right:-5%;animation-delay:3s;"></div>
+
+  <div class="terminal-wrap">
+    <div class="terminal">
+
+      <!-- Title bar -->
+      <div class="titlebar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="titlebar-label">root@mulato-sec: ~  [CRITICAL ERROR]</span>
+      </div>
+
+      <!-- Body -->
+      <div class="body">
+
+        <!-- Boot sequence -->
+        <div class="line"><span class="out-dim">[ &nbsp;0.000000] </span><span class="out-orange">&nbsp;Booting kernel 6.8.0-ai-redteam-x86_64 ...</span></div>
+        <div class="line"><span class="out-dim">[ &nbsp;0.041337] </span><span class="out">&nbsp;ACPI: IRQ0 used by override.</span></div>
+        <div class="line"><span class="out-dim">[ &nbsp;0.041338] </span><span class="out">&nbsp;Mounted /proc. Mounted /sys. Mounted /404. Wait—</span></div>
+        <div class="line"><span class="out-dim">[ &nbsp;0.041339] </span><span class="out-red">&nbsp;ERROR: Cannot mount /404 — filesystem does not exist.</span></div>
+        <div class="line"><span class="out-dim">[ &nbsp;0.041340] </span><span class="out-red">&nbsp;ERROR: Cannot mount /404 — it never existed.</span></div>
+        <div class="line"><span class="out-dim">[ &nbsp;0.041341] </span><span class="out-red">&nbsp;ERROR: You weren't supposed to be here.</span></div>
+
+        <div class="spacer"></div>
+
+        <!-- Kernel panic -->
+        <div class="panic-block">
+          *** KERNEL PANIC — NOT SYNCING: VFS: Unable to mount page "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ***
+        </div>
+
+        <!-- Big 404 -->
+        <span class="big404">404</span>
+        <div class="line out-red" style="font-size:1rem; font-weight:700; margin-bottom:0.6rem;">
+          Segmentation fault (core dumped)
+        </div>
+
+        <hr class="term" />
+
+        <!-- Fake investigation sequence -->
+        <div class="line">
+          <span class="prompt-root">root</span>
+          <span class="prompt-path">@mulato-sec</span>
+          <span class="out-dim">:</span>
+          <span class="out-orange">~</span>
+          <span class="out-dim">#&nbsp;</span>
+          <span class="cmd">locate "the page you were looking for"</span>
+        </div>
+        <div class="line"><span class="out">&nbsp;&nbsp;locate: command found. Page: not found. Ironic.</span></div>
+
+        <div class="spacer"></div>
+
+        <div class="line">
+          <span class="prompt-root">root</span>
+          <span class="prompt-path">@mulato-sec</span>
+          <span class="out-dim">:</span>
+          <span class="out-orange">~</span>
+          <span class="out-dim">#&nbsp;</span>
+          <span class="cmd">find / -name "*.html" -ipath "*that_page*" 2&gt;/dev/null</span>
+        </div>
+        <div class="line"><span class="out">&nbsp;&nbsp;[██████████████████<span class="bar-wrap"><span class="bar-fill"></span></span>] &nbsp;searching...</span></div>
+        <div class="line" id="find-result" style="opacity:0; transition: opacity 0.5s;">
+          <span class="out-red">&nbsp;&nbsp;find: No such file or directory. Obviously.</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="line">
+          <span class="prompt-root">root</span>
+          <span class="prompt-path">@mulato-sec</span>
+          <span class="out-dim">:</span>
+          <span class="out-orange">~</span>
+          <span class="out-dim">#&nbsp;</span>
+          <span class="cmd">curl -I "$(history | grep 'what I was looking for')"</span>
+        </div>
+        <div class="line"><span class="out-red">&nbsp;&nbsp;curl: (6) Could not resolve host: your_memory</span></div>
+        <div class="line"><span class="out-red">&nbsp;&nbsp;curl: (28) Connection timed out. (Story of my life.)</span></div>
+
+        <div class="spacer"></div>
+
+        <div class="line">
+          <span class="prompt-root">root</span>
+          <span class="prompt-path">@mulato-sec</span>
+          <span class="out-dim">:</span>
+          <span class="out-orange">~</span>
+          <span class="out-dim">#&nbsp;</span>
+          <span class="cmd">sudo fix-404 --force --please --im-begging-you</span>
+        </div>
+        <div class="line"><span class="out-orange">&nbsp;&nbsp;[sudo] password for user: </span></div>
+        <div class="line"><span class="out-red">&nbsp;&nbsp;sudo: fix-404: command not found</span></div>
+        <div class="line"><span class="out-red">&nbsp;&nbsp;sudo: also stop guessing commands. This isn't Stack Overflow.</span></div>
+
+        <div class="spacer"></div>
+
+        <div class="line">
+          <span class="prompt-root">root</span>
+          <span class="prompt-path">@mulato-sec</span>
+          <span class="out-dim">:</span>
+          <span class="out-orange">~</span>
+          <span class="out-dim">#&nbsp;</span>
+          <span class="cmd">git blame HEAD -- "this_situation"</span>
+        </div>
+        <div class="line"><span class="out">&nbsp;&nbsp;^a1b2c3d (You &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2026-06-17 23:59:59 +0000 1) typed the wrong URL</span></div>
+        <div class="line"><span class="out">&nbsp;&nbsp;^d3e4f5a (Also You &nbsp;&nbsp;2026-06-17 23:59:59 +0000 2) didn't check the link</span></div>
+        <div class="line"><span class="out">&nbsp;&nbsp;^f6a7b8c (Still You &nbsp;2026-06-17 23:59:59 +0000 3) blamed the server anyway</span></div>
+
+        <div class="spacer"></div>
+
+        <!-- Live typewriter output -->
+        <div class="line">
+          <span class="prompt-root">root</span>
+          <span class="prompt-path">@mulato-sec</span>
+          <span class="out-dim">:</span>
+          <span class="out-orange">~</span>
+          <span class="out-dim">#&nbsp;</span>
+          <span class="cmd">cat /etc/advice.conf</span>
+        </div>
+        <div class="line" style="padding-left:0.1rem;">
+          <span class="out-green" id="live-output"></span><span class="cursor"></span>
+        </div>
+
+        <hr class="term" />
+
+        <!-- Exit options -->
+        <div class="line out-bright" style="font-size:0.8rem; margin-bottom:0.3rem;">
+          Recovery options (pick one, I won't judge):
+        </div>
+
+        <div class="btn-row">
+          <a href="/" class="btn btn-primary">
+            <span>↩</span> cd ~/home
+          </a>
+          <a href="javascript:history.back()" class="btn btn-ghost">
+            <span>←</span> git stash (go back)
+          </a>
+          <a href="mailto:lucasmulato369@gmail.com" class="btn btn-ghost">
+            <span>✉</span> report --bug
+          </a>
+        </div>
+
+      </div><!-- /body -->
+    </div><!-- /terminal -->
+  </div><!-- /wrap -->
+
+  <script>
+    // ── Reveal find result after bar animation ──
+    setTimeout(() => {
+      document.getElementById('find-result').style.opacity = '1';
+    }, 4600);
+
+    // ── Typewriter for advice line ──
+    const adviceLines = [
+      "The page you seek exists only in concept space.",
+      "Have you tried turning the URL off and on again?",
+      "Pro tip: '404' is not a valid file path. It never was.",
+      "This is fine. Everything is fine. 🔥",
+      "Hint: the homepage is at '/'. Unlike this page, it exists.",
+    ];
+    const el = document.getElementById('live-output');
+    let idx = 0, ci = 0, del = false;
+
+    function type() {
+      const cur = adviceLines[idx];
+      if (!del) {
+        ci++;
+        el.textContent = cur.slice(0, ci);
+        if (ci === cur.length) {
+          del = true;
+          setTimeout(type, 2600);
+          return;
+        }
+      } else {
+        ci--;
+        el.textContent = cur.slice(0, ci);
+        if (ci === 0) {
+          del = false;
+          idx = (idx + 1) % adviceLines.length;
+        }
+      }
+      setTimeout(type, del ? 40 : 65);
+    }
+
+    // Start after a short boot delay for drama
+    setTimeout(type, 1200);
+  </script>
+</body>
+</html>
