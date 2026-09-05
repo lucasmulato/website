@@ -230,7 +230,8 @@
       <a href="#about"    class="hover:text-bright transition-colors">About</a>
       <a href="#expertise" class="hover:text-bright transition-colors">Expertise</a>
       <a href="#projects"  class="hover:text-bright transition-colors">Projects</a>
-      <a href="#experience" class="hover:text-bright transition-colors">Experience</a>
+        <a href="#blog"     class="hover:text-bright transition-colors">Blog</a>
+        <a href="#experience" class="hover:text-bright transition-colors">Experience</a>
       <a href="#contact"   class="hover:text-bright transition-colors">Contact</a>
       <a href="files/Curriculo.pdf" download
          class="btn-glow text-white px-4 py-1.5 rounded-md text-sm font-semibold font-display">
@@ -251,7 +252,8 @@
       <a href="#about"      class="hover:text-bright" onclick="closeMobileMenu()">About</a>
       <a href="#expertise"  class="hover:text-bright" onclick="closeMobileMenu()">Expertise</a>
       <a href="#projects"   class="hover:text-bright" onclick="closeMobileMenu()">Projects</a>
-      <a href="#experience" class="hover:text-bright" onclick="closeMobileMenu()">Experience</a>
+        <a href="#blog"      class="hover:text-bright" onclick="closeMobileMenu()">Blog</a>
+        <a href="#experience" class="hover:text-bright" onclick="closeMobileMenu()">Experience</a>
       <a href="#contact"    class="hover:text-bright" onclick="closeMobileMenu()">Contact</a>
       <a href="files/Curriculo.pdf" download
          class="btn-glow text-white px-4 py-2 rounded-md text-sm font-semibold font-display text-center mt-1">
@@ -691,8 +693,151 @@ attacker.report(result)</code></pre>
 
 
 <!-- ══════════════════════════════════════════
-     EXPERIENCE
-════════════════════════════════════════════ -->
+      BLOG
+═══════════════════════════════════════════ -->
+<section id="blog" class="py-28 border-t border-border">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-16 reveal">
+      <p class="section-label mb-3">Writing</p>
+      <h2 class="font-display font-bold text-3xl md:text-4xl text-bright">
+        Research &amp; Progress
+      </h2>
+      <p class="text-muted mt-4 max-w-xl mx-auto">
+        Notes, walkthroughs, and findings from my AI security research and LLM-SEC development.
+      </p>
+    </div>
+
+    <!-- Featured post -->
+    <div class="card p-7 mb-6 reveal" style="border-color:#7c3aed55; background: linear-gradient(135deg, #0d1528 60%, #130a2a);">
+      <div class="flex flex-col lg:flex-row lg:items-start gap-6">
+        <div class="flex-1">
+          <div class="flex flex-wrap items-center gap-3 mb-3">
+            <span class="tag border-violethi text-violethi">★ FEATURED</span>
+            <span class="font-mono text-xs text-muted">Sep 2026</span>
+          </div>
+          <h3 class="font-display font-bold text-bright text-2xl mb-3">Introducing LLM-SEC: Finding Bugs in Your AI Before Attackers Do</h3>
+          <p class="text-muted leading-relaxed mb-5 max-w-2xl">
+            Most security tools use AI to find bugs in your app. LLM-SEC finds the bugs in your AI.
+            A production adversarial reasoning engine for teams shipping LLM applications — RAG pipelines,
+            agentic workflows, and customer-facing chatbots with memory.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-5">
+            <span class="tag border-border text-muted">LLM Security</span>
+            <span class="tag border-border text-muted">RAG</span>
+            <span class="tag border-border text-muted">Adversarial</span>
+            <span class="tag border-border text-muted">Python</span>
+          </div>
+          <a href="https://github.com/lucasmulato/LLM-SEC" target="_blank" rel="noopener"
+             class="btn-glow text-white px-5 py-2.5 rounded-lg text-sm font-semibold font-display inline-flex items-center gap-2">
+            View Project →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post grid -->
+    <div class="grid sm:grid-cols-2 gap-5">
+
+      <div class="card p-6 reveal" style="transition-delay:0.08s">
+        <div class="flex items-center justify-between mb-3">
+          <span class="tag border-border text-muted">Research</span>
+          <span class="font-mono text-xs text-muted">Aug 2026</span>
+        </div>
+        <h3 class="font-display font-semibold text-bright text-xl mb-2">Cross-Component Attack Chains in RAG Systems</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">
+          Why poisoned embeddings, retrieved-as-trusted-context, and unauthorized API calls emerge
+          when individual components are secure in isolation.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag border-border text-muted">RAG</span>
+          <span class="tag border-border text-muted">Embeddings</span>
+          <span class="tag border-border text-muted">Chain Attacks</span>
+        </div>
+        <a href="#" target="_blank" rel="noopener"
+           class="btn-outline px-4 py-2 rounded-lg text-sm font-semibold font-display inline-flex items-center gap-1.5">
+          Read Article ↗
+        </a>
+      </div>
+
+      <div class="card p-6 reveal" style="transition-delay:0.16s">
+        <div class="flex items-center justify-between mb-3">
+          <span class="tag border-border text-muted">Technical</span>
+          <span class="font-mono text-xs text-muted">Jul 2026</span>
+        </div>
+        <h3 class="font-display font-semibold text-bright text-xl mb-2">Tri-Stage PII Detection: Beyond Regex in LLM Outputs</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">
+          Regex catches obvious leaks. NER catches named entities. Neither catches reconstructed PII
+          assembled from benign fragments across multiple documents.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag border-border text-muted">PII</span>
+          <span class="tag border-border text-muted">NER</span>
+          <span class="tag border-border text-muted">LLM-as-Judge</span>
+        </div>
+        <a href="#" target="_blank" rel="noopener"
+           class="btn-outline px-4 py-2 rounded-lg text-sm font-semibold font-display inline-flex items-center gap-1.5">
+          Read Article ↗
+        </a>
+      </div>
+
+      <div class="card p-6 reveal" style="transition-delay:0.24s">
+        <div class="flex items-center justify-between mb-3">
+          <span class="tag border-border text-muted">Analysis</span>
+          <span class="font-mono text-xs text-muted">Jun 2026</span>
+        </div>
+        <h3 class="font-display font-semibold text-bright text-xl mb-2">Why Traditional Pentest Reports Miss AI Vulnerabilities</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">
+          AI vulnerabilities don't fit neatly into OWASP categories in isolation. They emerge from
+          the interaction of components that were secure individually.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag border-border text-muted">Pentesting</span>
+          <span class="tag border-border text-muted">AI Safety</span>
+          <span class="tag border-border text-muted">OWASP</span>
+        </div>
+        <a href="#" target="_blank" rel="noopener"
+           class="btn-outline px-4 py-2 rounded-lg text-sm font-semibold font-display inline-flex items-center gap-1.5">
+          Read Article ↗
+        </a>
+      </div>
+
+      <div class="card p-6 reveal" style="transition-delay:0.32s">
+        <div class="flex items-center justify-between mb-3">
+          <span class="tag border-border text-muted">Build</span>
+          <span class="font-mono text-xs text-muted">May 2026</span>
+        </div>
+        <h3 class="font-display font-semibold text-bright text-xl mb-2">Building the LangGraph Attack Engine</h3>
+        <p class="text-muted text-sm leading-relaxed mb-4">
+          How we model attacks as state machines — reconnaissance, injection, retrieval manipulation,
+          generation exploitation, and unauthorized action.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag border-border text-muted">LangGraph</span>
+          <span class="tag border-border text-muted">State Machines</span>
+          <span class="tag border-border text-muted">Python</span>
+        </div>
+        <a href="#" target="_blank" rel="noopener"
+           class="btn-outline px-4 py-2 rounded-lg text-sm font-semibold font-display inline-flex items-center gap-1.5">
+          Read Article ↗
+        </a>
+      </div>
+
+    </div>
+
+    <!-- View all posts CTA -->
+    <div class="text-center mt-12 reveal">
+      <a href="https://github.com/lucasmulato/LLM-SEC" target="_blank" rel="noopener"
+         class="btn-outline px-6 py-3 rounded-lg font-semibold font-display text-sm inline-flex items-center gap-2">
+        View All Posts →
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+      EXPERIENCE
+═══════════════════════════════════════════ -->
 <section id="experience" class="py-28 border-t border-border">
   <div class="max-w-6xl mx-auto px-5">
     <div class="grid md:grid-cols-2 gap-14">
